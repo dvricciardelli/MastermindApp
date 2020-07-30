@@ -24,7 +24,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClear(@Suppress("UNUSED_PARAMETER")view: View){
+        val lastGuess = tvInput.text
         tvInput.text = ""
+        tvHistory.text = lastGuess
+
     }
 
     fun onGuess(@Suppress("UNUSED_PARAMETER")view: View){
@@ -33,11 +36,12 @@ class MainActivity : AppCompatActivity() {
         if(guess.count() == CODE_LENGTH){
             val evaluation = evaluateGuess(secret, guess)
             if (evaluation.isComplete()) {
-                Toast.makeText(this, "The guess is correct", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Right postion: ${evaluation.rightPosition} wrong position ${evaluation.wrongPosition}", Toast.LENGTH_SHORT).show()
+                tvFeedback.text = "The guess is correct"
 
+            } else {
+                tvFeedback.text ="Right postion: ${evaluation.rightPosition} wrong position ${evaluation.wrongPosition}"
             }
+            tvHistory.text=""
         }
         else{
             Toast.makeText(this, "Guess is at least ${CODE_LENGTH} characters", Toast.LENGTH_SHORT).show()
