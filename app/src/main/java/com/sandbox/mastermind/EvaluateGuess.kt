@@ -1,7 +1,5 @@
 package com.sandbox.mastermind
 
-data class Evaluation(val rightPosition: Int, val wrongPosition: Int)
-
 fun evaluateGuess(secretString: String, guessString: String): Evaluation {
     val wrong = mutableMapOf<Int, Char>()
     val right = mutableMapOf<Int, Char>()

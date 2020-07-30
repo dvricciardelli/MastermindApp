@@ -2,7 +2,7 @@ package com.sandbox.mastermind
 
 import kotlin.random.Random
 
-val ALPHABET = 'A'..'F'
+val ALPHABET = 'A'..'I'
 const val CODE_LENGTH = 4
 
 fun generateSecret(): String {
