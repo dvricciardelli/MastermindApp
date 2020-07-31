@@ -4,18 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/backgroundColor"
     tools:context=".MainActivity">
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="24sp"
+        android:textColor="@color/textColor"
         android:text="@string/description" />
     <TextView
         android:id="@+id/tvInput"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#efefef"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/textColor"
         android:layout_marginBottom="2dp"
         android:gravity="center"
         android:textSize="32sp"
@@ -24,14 +27,16 @@
         android:id="@+id/tvFeedback"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="#efefef"
+        android:textColor="@color/textColor"
+        android:background="@color/colorPrimary"
         android:gravity="center_horizontal"
         android:textSize="24sp"/>
     <TextView
         android:id="@+id/tvHistory"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="#efefef"
+        android:textColor="@color/textColor"
+        android:background="@color/colorPrimary"
         android:gravity="center_horizontal"
         android:textSize="24sp"/>
     <!-- Row 1 -->
@@ -47,6 +52,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_letter_button"
             android:text="A"
             android:onClick="onLetter"/>
         <Button
@@ -54,6 +61,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_letter_button"
             android:text="B"
             android:onClick="onLetter"/>
         <Button
@@ -61,6 +70,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_letter_button"
             android:text="C"
             android:onClick="onLetter"/>
     </LinearLayout>
@@ -77,6 +88,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_margin="6dp"
+        android:background="@drawable/default_letter_button"
         android:text="D"
         android:onClick="onLetter"/>
     <Button
@@ -84,6 +97,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_margin="6dp"
+        android:background="@drawable/default_letter_button"
         android:text="E"
         android:onClick="onLetter"/>
     <Button
@@ -91,6 +106,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_margin="6dp"
+        android:background="@drawable/default_letter_button"
         android:text="F"
         android:onClick="onLetter"/>
 </LinearLayout>
@@ -107,6 +124,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_letter_button"
             android:text="G"
             android:onClick="onLetter"/>
         <Button
@@ -114,6 +133,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_letter_button"
             android:text="H"
             android:onClick="onLetter"/>
         <Button
@@ -121,6 +142,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_letter_button"
             android:text="I"
             android:onClick="onLetter"/>
     </LinearLayout>
@@ -137,6 +160,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_action_button"
             android:text="Guess"
             android:onClick="onGuess"/>
         <Button
@@ -144,6 +169,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_action_button"
             android:text="Clear"
             android:onClick="onClear"/>
     </LinearLayout>
