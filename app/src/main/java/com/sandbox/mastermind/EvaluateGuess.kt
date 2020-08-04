@@ -1,5 +1,7 @@
 package com.sandbox.mastermind
 
+const val MAX_GUESS = 2
+
 fun evaluateGuess(secretString: String, guessString: String): Evaluation {
     val wrong = mutableMapOf<Int, Char>()
     val right = mutableMapOf<Int, Char>()

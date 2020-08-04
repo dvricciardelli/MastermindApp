@@ -120,42 +120,6 @@
         android:orientation="horizontal"
         >
         <Button
-            android:id="@+id/btnG"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="6dp"
-            android:background="@drawable/default_letter_button"
-            android:text="G"
-            android:onClick="onLetter"/>
-        <Button
-            android:id="@+id/btnH"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="6dp"
-            android:background="@drawable/default_letter_button"
-            android:text="H"
-            android:onClick="onLetter"/>
-        <Button
-            android:id="@+id/btnI"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="6dp"
-            android:background="@drawable/default_letter_button"
-            android:text="I"
-            android:onClick="onLetter"/>
-    </LinearLayout>
-    <!-- Row 4 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        >
-        <Button
             android:id="@+id/btnGuess"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -173,6 +137,24 @@
             android:background="@drawable/default_action_button"
             android:text="Clear"
             android:onClick="onClear"/>
+    </LinearLayout>
+    <!-- Row 4 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/btnFinish"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/default_action_button"
+            android:text="RESTART"
+            android:onClick="onFinish"/>
     </LinearLayout>
 
 
