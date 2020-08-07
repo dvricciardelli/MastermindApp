@@ -1,7 +1,6 @@
 package com.sandbox.mastermind
 
 import android.content.Intent
-import com.sandbox.mastermind.Evaluation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -78,33 +77,15 @@ class MainActivity : AppCompatActivity() {
             guessCount = 0
         }
         else {
-            val winnerIntent = Intent(this, PassActivity::class.java)
-            val loseIntent = Intent(this, FailActivity::class.java)
-            if(isWinner)
-            {
-                isWinner()
-            } else{
-                isLoser()
-            }
+            val intent = Intent(this, ResultsActivity::class.java)
+            intent.putExtra(Constants.TOTAL_GUESSES, guessCount)
+            intent.putExtra(Constants.SECRET, secret)
+            startActivity(intent)
+            finish()
         }
 
     }
 
     fun Evaluation.isComplete(): Boolean = rightPosition == CODE_LENGTH
 
-    fun isWinner(){
-        val intent = Intent(this, PassActivity::class.java)
-        intent.putExtra(Constants.TOTAL_GUESSES, guessCount)
-        intent.putExtra(Constants.SECRET, secret)
-        startActivity(intent)
-        finish()
-    }
-
-    fun isLoser(){
-        val intent = Intent(this, FailActivity::class.java)
-        intent.putExtra(Constants.TOTAL_GUESSES, guessCount)
-        intent.putExtra(Constants.SECRET, secret)
-        startActivity(intent)
-        finish()
-    }
 }
