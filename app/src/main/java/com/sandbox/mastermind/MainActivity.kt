@@ -1,5 +1,6 @@
 package com.sandbox.mastermind
 
+import android.app.Dialog
 import android.content.Intent
 
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +9,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.mastermind_results.*
 
 class MainActivity : AppCompatActivity() {
 
     private var secret = ""
     private var guessCount = 0
-    private var isWinner = false
+    private var isWinner: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //TODO: Add rotating capability
@@ -52,9 +54,7 @@ class MainActivity : AppCompatActivity() {
                 guessCount++
             }
             if(guessCount >= MAX_GUESS){
-                btnFinish.text = "Results"
-                btnClear.isEnabled = false
-                btnGuess.isEnabled = false
+                ResultDialogFunction()
             }
             tvHistory.text=""
         }
@@ -67,22 +67,43 @@ class MainActivity : AppCompatActivity() {
 
     fun onFinish(@Suppress("UNUSED_PARAMETER")view: View){
         val btnState = btnFinish.text
+        ResetGame()
+    }
 
-        //TODO: add constants for the state
-        if(btnState == "RESTART") {
-            secret = generateSecret()
-            tvInput.text = ""
-            tvHistory.text=""
-            tvFeedback.text=""
-            guessCount = 0
-        }
-        else {
-            val intent = Intent(this, ResultsActivity::class.java)
-            intent.putExtra(Constants.TOTAL_GUESSES, guessCount)
-            intent.putExtra(Constants.SECRET, secret)
-            startActivity(intent)
-            finish()
-        }
+    private fun RestultActivity(){
+        val intent = Intent(this, ResultsActivity::class.java)
+        intent.putExtra(Constants.TOTAL_GUESSES, guessCount)
+        intent.putExtra(Constants.SECRET, secret)
+
+        startActivity(intent)
+        finish()
+    }
+
+    private fun ResultDialogFunction(){
+        val resultDialog = Dialog(this)
+
+        resultDialog.setContentView(R.layout.mastermind_results)
+
+        resultDialog.tv_result.text = "You Lost"
+        resultDialog.tv_congratulations.text = "Keep Practicing"
+        resultDialog.iv_trophy.setImageResource(R.drawable.ic_sad_emoji)
+        resultDialog.tv_score.text = "You took $guessCount guesses to get secret $secret"
+
+        resultDialog.btn_finish.setOnClickListener(View.OnClickListener {
+            resultDialog.dismiss()
+            ResetGame()
+
+        })
+
+        resultDialog.show()
+    }
+
+    private fun ResetGame(){
+        secret = generateSecret()
+        tvInput.text = ""
+        tvHistory.text=""
+        tvFeedback.text=""
+        guessCount = 0
 
     }
 
