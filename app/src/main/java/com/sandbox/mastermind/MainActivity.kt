@@ -31,8 +31,10 @@ class MainActivity : AppCompatActivity() {
     fun onClear(@Suppress("UNUSED_PARAMETER")view: View){
         //TODO: Consider when user cleared guess
         val lastGuess = tvInput.text
+        if(lastGuess.count() == CODE_LENGTH){
+            tvHistory.text = lastGuess
+        }
         tvInput.text = ""
-        tvHistory.text = lastGuess
 
     }
 
@@ -41,22 +43,21 @@ class MainActivity : AppCompatActivity() {
         val guess = tvInput.text.toString()
 
         if(guess.count() == CODE_LENGTH){
+            guessCount++
             val evaluation = evaluateGuess(secret, guess)
             if (evaluation.isComplete()) {
-                tvFeedback.text = "The guess is correct"
-                btnFinish.text = "Results"
-                btnClear.isEnabled = false
-                btnGuess.isEnabled = false
                 isWinner = true
+                ResultDialogFunction()
             } else {
                 //TODO: Add visibilty of how many guesses left
-                tvFeedback.text ="Right postion: ${evaluation.rightPosition} Wrong position ${evaluation.wrongPosition}"
-                guessCount++
+                if(guessCount >= MAX_GUESS){
+                    ResultDialogFunction()
+                } else {
+                    tvFeedback.text ="Right postion: ${evaluation.rightPosition} Wrong position ${evaluation.wrongPosition}"
+                    tvHistory.text=""
+                }
             }
-            if(guessCount >= MAX_GUESS){
-                ResultDialogFunction()
-            }
-            tvHistory.text=""
+
         }
         else{
             Toast.makeText(this, "Guess is at least ${CODE_LENGTH} characters", Toast.LENGTH_SHORT).show()
@@ -84,10 +85,18 @@ class MainActivity : AppCompatActivity() {
 
         resultDialog.setContentView(R.layout.mastermind_results)
 
-        resultDialog.tv_result.text = "You Lost"
-        resultDialog.tv_congratulations.text = "Keep Practicing"
-        resultDialog.iv_trophy.setImageResource(R.drawable.ic_sad_emoji)
-        resultDialog.tv_score.text = "You took $guessCount guesses to get secret $secret"
+        if(isWinner){
+            resultDialog.tv_result.text = "You Won"
+            resultDialog.tv_congratulations.text = "Congratulations!"
+            resultDialog.iv_trophy.setImageResource(R.drawable.ic_trophy)
+            resultDialog.tv_score.text = "You took $guessCount guesses to get secret $secret"
+        } else {
+            resultDialog.tv_result.text = "You Lost"
+            resultDialog.tv_congratulations.text = "Keep Practicing"
+            resultDialog.iv_trophy.setImageResource(R.drawable.ic_sad_emoji)
+            resultDialog.tv_score.text = "You maxed out $guessCount guesses to get secret $secret"
+        }
+
 
         resultDialog.btn_finish.setOnClickListener(View.OnClickListener {
             resultDialog.dismiss()
