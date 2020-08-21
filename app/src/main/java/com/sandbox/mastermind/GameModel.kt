@@ -11,8 +11,8 @@ class GameModel (private val MAX_GUESS: Int,
 
     private val ALPHABET = firstChar..lastChar
     private val secretString = createSecret()
-    private var isWinner = false
     private var guessCount = 0
+    private var evaluation: Evaluation = Evaluation(0,0)
 
     private fun createSecret(): String{
 
@@ -28,7 +28,7 @@ class GameModel (private val MAX_GUESS: Int,
         }
     }
 
-    fun evaluateGuess(guessString: String): Evaluation{
+    fun evaluateGuess(guessString: String){
 
         guessCount++
         val wrong = mutableMapOf<Int, Char>()
@@ -70,20 +70,16 @@ class GameModel (private val MAX_GUESS: Int,
 
             }
         }
-        val result = Evaluation(right.count(),wrong.count())
-        return result
+        evaluation = Evaluation(right.count(),wrong.count())
     }
 
     fun GetGuessCount(): Int{
         return guessCount
     }
 
-    fun SetWinner() {
-        isWinner = true
-    }
+    fun isWinner(): Boolean{
+        return evaluation.isWinner()
 
-    fun GetWinner(): Boolean{
-        return isWinner
     }
 
     fun isLoser(): Boolean{
@@ -92,9 +88,24 @@ class GameModel (private val MAX_GUESS: Int,
 
     fun isGuessLength(guess: String): Boolean {
         return guess.count()==CODE_LENGTH
+
     }
 
     fun GetSecret(): String{
         return secretString
     }
+
+    fun GetRightAnswers(): Int{
+        return evaluation.rightPosition
+    }
+
+    fun GetWrongAnswers(): Int{
+        return evaluation.wrongPosition
+    }
+
+    fun SecretSize(): Int {
+        return CODE_LENGTH
+    }
+
+    fun Evaluation.isWinner(): Boolean = rightPosition == CODE_LENGTH
 }

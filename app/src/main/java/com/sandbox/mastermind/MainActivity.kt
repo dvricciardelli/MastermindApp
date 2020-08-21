@@ -5,11 +5,14 @@ import android.content.Intent
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.mastermind_results.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,29 +43,33 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun onHistory(@Suppress("UNUSED_PARAMETER")view: View){
+        val intent = Intent(this, HistoryActivity::class.java)
+        startActivity(intent)
+    }
+
     fun onGuess(@Suppress("UNUSED_PARAMETER")view: View){
 
         val guess = tvInput.text.toString()
 
         if(gamePlay.isGuessLength(guess)){
             //guessCount++
-            val evaluation = gamePlay.evaluateGuess(guess)
-            if (evaluation.isWinner()) {
-                gamePlay.SetWinner()
+            gamePlay.evaluateGuess(guess)
+            if (gamePlay.isWinner()) {
                 ResultDialogFunction()
             } else {
                 //TODO: Add visibilty of how many guesses left
                 if(gamePlay.isLoser()){
                     ResultDialogFunction()
                 } else {
-                    tvFeedback.text ="Right postion: ${evaluation.rightPosition} Wrong position ${evaluation.wrongPosition}"
+                    tvFeedback.text ="Right postion: ${gamePlay.GetRightAnswers()} Wrong position ${gamePlay.GetWrongAnswers()}"
                     tvHistory.text=""
                 }
             }
 
         }
         else{
-            Toast.makeText(this, "Guess is at least ${CODE_LENGTH} characters", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Guess is at least ${gamePlay.SecretSize()} characters", Toast.LENGTH_SHORT).show()
             tvInput.text = ""
         }
 
@@ -78,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         resultDialog.setContentView(R.layout.mastermind_results)
 
-        if(gamePlay.GetWinner()){
+        if(gamePlay.isWinner()){
             resultDialog.tv_result.text = "You Won"
             resultDialog.tv_congratulations.text = "Congratulations!"
             resultDialog.iv_trophy.setImageResource(R.drawable.ic_trophy)
@@ -97,7 +104,22 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+        addDateToDatabase()
         resultDialog.show()
+    }
+
+    private fun addDateToDatabase(){
+        val calendar = Calendar.getInstance()
+        val dateTime = calendar.time
+        Log.i("DATE:", "" + dateTime)
+
+        val sdf = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault())
+        val date = sdf.format(dateTime)
+
+        val dbHandler = SqliteOpenHelper(this, null )
+        dbHandler.addDate(date)
+        Log.i("DATE: ", "Added")
+
     }
 
     private fun ResetGame(){
@@ -108,6 +130,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun Evaluation.isWinner(): Boolean = rightPosition == CODE_LENGTH
+
 
 }
