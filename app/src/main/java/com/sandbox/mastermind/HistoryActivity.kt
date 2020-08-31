@@ -15,21 +15,21 @@ class HistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
 
-        getAllCompletedDates()
+        getAllCompletedGames()
 
     }
 
-    private fun getAllCompletedDates(){
+    private fun getAllCompletedGames(){
         val dbHandler = SqliteOpenHelper(this, null)
-        val allCompletedDatesList = dbHandler.getAllCompletedDatesList()
+        val allCompletedGamesList = dbHandler.getAllCompletedGamesList()
 
-        if(allCompletedDatesList.size > 0){
+        if(allCompletedGamesList.size > 0){
             tvHistory.visibility = View.VISIBLE
             rvHistory.visibility = View.VISIBLE
             tvNoDataAvailable.visibility = View.GONE
 
             rvHistory.layoutManager = LinearLayoutManager(this)
-            val historyAdapter = HistoryAdapter(this, allCompletedDatesList)
+            val historyAdapter = HistoryAdapter(this, allCompletedGamesList)
             rvHistory.adapter = historyAdapter
         } else {
             tvHistory.visibility = View.GONE

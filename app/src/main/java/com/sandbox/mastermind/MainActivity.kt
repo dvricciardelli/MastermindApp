@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //secret = generateSecret()
         gamePlay = Game.setSecret()
+        Log.i("Secret", gamePlay.GetSecret())
     }
 
     fun onLetter(view: View){
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         if(gamePlay.isGuessLength(guess)){
             //guessCount++
             gamePlay.evaluateGuess(guess)
-            if (gamePlay.isWinner()) {
+            if (gamePlay.isWinner() === 1) {
                 ResultDialogFunction()
             } else {
                 //TODO: Add visibilty of how many guesses left
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         resultDialog.setContentView(R.layout.mastermind_results)
 
-        if(gamePlay.isWinner()){
+        if(gamePlay.isWinner() === 1){
             resultDialog.tv_result.text = "You Won"
             resultDialog.tv_congratulations.text = "Congratulations!"
             resultDialog.iv_trophy.setImageResource(R.drawable.ic_trophy)
@@ -97,13 +98,10 @@ class MainActivity : AppCompatActivity() {
             resultDialog.tv_score.text = "You maxed out ${gamePlay.GetGuessCount()} guesses to get secret ${gamePlay.GetSecret()}"
         }
 
-
         resultDialog.btn_finish.setOnClickListener(View.OnClickListener {
             resultDialog.dismiss()
             ResetGame()
-
         })
-
         addDateToDatabase()
         resultDialog.show()
     }
@@ -117,7 +115,8 @@ class MainActivity : AppCompatActivity() {
         val date = sdf.format(dateTime)
 
         val dbHandler = SqliteOpenHelper(this, null )
-        dbHandler.addDate(date)
+        val game = HistoryData(date, gamePlay.GetResult(), gamePlay.GetGuess(), gamePlay.GetSecret(), gamePlay.GetGuessCount() )
+        dbHandler.addGame(date, game)
         Log.i("DATE: ", "Added")
 
     }
@@ -127,9 +126,8 @@ class MainActivity : AppCompatActivity() {
         tvInput.text = ""
         tvHistory.text=""
         tvFeedback.text=""
+        Log.i("Secret", gamePlay.GetSecret())
 
     }
-
-
 
 }

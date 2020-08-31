@@ -13,6 +13,8 @@ class GameModel (private val MAX_GUESS: Int,
     private val secretString = createSecret()
     private var guessCount = 0
     private var evaluation: Evaluation = Evaluation(0,0)
+    private var winner = 0
+    private var guessString = ""
 
     private fun createSecret(): String{
 
@@ -70,6 +72,7 @@ class GameModel (private val MAX_GUESS: Int,
 
             }
         }
+        this.guessString = guessString
         evaluation = Evaluation(right.count(),wrong.count())
     }
 
@@ -77,9 +80,10 @@ class GameModel (private val MAX_GUESS: Int,
         return guessCount
     }
 
-    fun isWinner(): Boolean{
-        return evaluation.isWinner()
-
+    fun isWinner(): Int{
+        if(evaluation.isWinner())
+            winner = 1
+        return 0
     }
 
     fun isLoser(): Boolean{
@@ -95,6 +99,14 @@ class GameModel (private val MAX_GUESS: Int,
         return secretString
     }
 
+    fun GetGuess(): String{
+        return guessString
+    }
+
+    fun GetResult(): Int{
+        return winner
+    }
+
     fun GetRightAnswers(): Int{
         return evaluation.rightPosition
     }
@@ -106,6 +118,8 @@ class GameModel (private val MAX_GUESS: Int,
     fun SecretSize(): Int {
         return CODE_LENGTH
     }
+
+
 
     fun Evaluation.isWinner(): Boolean = rightPosition == CODE_LENGTH
 }
