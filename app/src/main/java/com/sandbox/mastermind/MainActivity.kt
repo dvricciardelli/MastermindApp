@@ -9,10 +9,12 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.mastermind_results.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //secret = generateSecret()
         gamePlay = Game.setSecret()
+        val tvInstruction = textView2.append(" " + gamePlay.GetLastChar().toString())
         Log.i("Secret", gamePlay.GetSecret())
+        gridView()
     }
 
     fun onLetter(view: View){
@@ -81,6 +85,12 @@ class MainActivity : AppCompatActivity() {
         ResetGame()
     }
 
+    private fun gridView(){
+        rvGuessList.layoutManager = GridLayoutManager(this, 3)
+        val itemAdapter = ItemAdapter(this, getGuessList())
+        rvGuessList.adapter = itemAdapter
+    }
+
     private fun ResultDialogFunction(){
         val resultDialog = Dialog(this)
 
@@ -128,6 +138,16 @@ class MainActivity : AppCompatActivity() {
         tvFeedback.text=""
         Log.i("Secret", gamePlay.GetSecret())
 
+    }
+
+    private fun getGuessList(): ArrayList<String>{
+        val list = ArrayList<String>()
+
+        for(i in 'A' .. gamePlay.GetLastChar()){
+            list.add(i.toString())
+        }
+
+        return list
     }
 
 }

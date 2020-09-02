@@ -115,6 +115,10 @@ class GameModel (private val MAX_GUESS: Int,
         return evaluation.wrongPosition
     }
 
+    fun GetLastChar(): Char{
+        return lastChar
+    }
+
     fun SecretSize(): Int {
         return CODE_LENGTH
     }
